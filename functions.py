@@ -1,16 +1,19 @@
 from bs4 import BeautifulSoup
 from scraper import Scrap
 from urllib.parse import urljoin
+from typing import Iterator
 
-def recursive_explore(url: str, depth : int, result: set[str]) -> None:
+def recursive_explore(url: str, depth : int, result: set[str]) -> Iterator[str]:
     if depth == 0:
         return None
     i_scrap = Scrap(url, depth)
     links = i_scrap.get_link_from_html()
-    if not links:
-        return None
+
     for link in links:
         link = urljoin(i_scrap.domain, link)
+        if link in result:
+            continue
+        yield link
         result.add(link)
         recursive_explore(link, depth-1, result)
 

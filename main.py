@@ -4,14 +4,14 @@ from urllib.parse import urlparse, urljoin
 
 from functions import recursive_explore
 
-depth = 1
-url = "https://www.eddineomar.fr/"
+depth = 100
+url = "https://github.com/"
 result : set[str] = set()
-recursive_explore(url, depth, result)
+
 print(result)
 print(len(result))
 
-thread1 = thread_publish_page_content(result)
+thread1 = thread_publish_page_content(recursive_explore(url, depth, result))
 thread2 = thread_consume_page_content()
 
 thread1.start()

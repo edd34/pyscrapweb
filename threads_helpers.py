@@ -3,12 +3,12 @@ import pika
 import requests
 from requests import Response
 from functions import extract_link_class_id
-from typing import List
+from typing import List, Iterator
 
 class thread_publish_page_content(threading.Thread):
-    def __init__(self, links: set[str]):
+    def __init__(self, links: Iterator[str]):
         threading.Thread.__init__(self)
-        self.links : set[str] = links
+        self.links : Iterator[str] = links
     def run(self):
         connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
         channel = connection.channel()

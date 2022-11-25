@@ -1,31 +1,33 @@
 from bs4 import BeautifulSoup
+from bs4.element import ResultSet
 import requests
+from requests import Response
 from urllib.parse import urljoin
 from urllib.parse import urlparse
-
+from typing import Optional
 class Scrap:
     def __init__(self, url, depth):
-        self.url = url
-        self.depth = depth
-        self.domain = urlparse(url).geturl()
-        self.html_content = None
-        self.soup = None
+        self.url : str = url
+        self.depth : int = depth
+        self.domain : str = urlparse(url).geturl()
+        self.html_content : Optional[str] = None
+        self.soup : Optional[BeautifulSoup] = None
         self.links = []
         self._get_html_from_url()
 
-    def _get_html_from_url(self):
-        res = requests.get(self.url)
+    def _get_html_from_url(self) -> Optional[str]:
+        res : Response = requests.get(self.url)
         if not res.ok:
             return None
         self.soup = BeautifulSoup(res.text, 'lxml')
-        self.html = res.text
+        self.html : str = res.text
         return self.html
 
-    def get_link_from_html(self):
-        result = []
+    def get_link_from_html(self) -> list[str]:
+        result : list[str] = []
         if not self.soup:
             return []
-        links = self.soup.find_all('a')
+        links : ResultSet = self.soup.find_all('a')
 
         for l in links:
             link = l.get('href')
