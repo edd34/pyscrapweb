@@ -73,7 +73,7 @@ docker build -t pyscrapweb .
 You can the run the project directly from the container :
 
 ```bash
-docker run --rm -v ${PWD}:/app pyscrapweb \
+docker run --net=host --rm -v ${PWD}:/app pyscrapweb \
     --url ${BOOKSTACK_HOSTNAME} \
     --depth ${BOOKSTACK_TOKEN_ID}
 ```
