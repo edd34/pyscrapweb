@@ -1,6 +1,6 @@
 #include <iostream>
 
-int Add(int a, int b) 
+int Add(int a, int b)
 {
     return a+b;
 }
@@ -8,6 +8,6 @@ int Add(int a, int b)
 extern "C" {
     int My_Add(int a, int b)
     {
-        return Add(a);
+        return Add(a,b);
     }
 }
